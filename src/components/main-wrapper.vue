@@ -1,18 +1,38 @@
 <template>
-<div class="wrapper"></div>
+<div class="main-wrapper">
+  <vCatalog></vCatalog>
+  <vCart></vCart>
+  <Login></Login>
+</div>
 </template>
 
 <script>
+
+import vCatalog from "./v-catalog"
+import vCart from "./v-cart"
+import Login from "@/pages/Login";
+
 export default {
-  name: 'wrapper'
+  name: 'main-wrapper',
+  components: {
+    vCatalog,
+    vCart,
+    Login
+  },
+  props: {},
+  data() {
+    return {
+      title: 'Main wrapper'
+    }
+  },
+  computed: {},
+  methods: {},
+  watch: {},
 }
 </script>
 
 <style>
-  .wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .main-wrapper {
     max-width: 900px;
     margin: 0 auto;
   }

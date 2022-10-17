@@ -1,13 +1,15 @@
 <template>
-$END$
+<h2>cart</h2>
 </template>
 
 <script>
+
 export default {
-name: "v-cart"
+  name: "v-cart",
+
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
