@@ -1,8 +1,10 @@
 <template>
   <div class="v-catalog-item">
     <img src="" alt="">
-    <p>item</p>
-    <p>Price: </p>
+    <p>{{ name }}</p>
+    <p>Description</p>
+    <p>{{ description }}</p>
+    <p>Price: {{ price }}</p>
     <button>Add to cart</button>
   </div>
 
