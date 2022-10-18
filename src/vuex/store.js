@@ -5,6 +5,8 @@ let store = new Vuex.Store({
     state: {
         products: []
     },
+    mutations: {},
+    actions: {},
     getters: {}
 });
 

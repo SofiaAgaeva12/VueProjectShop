@@ -11,7 +11,6 @@
 import vCatalog from "./v-catalog"
 import vCart from "./v-cart"
 import Login from "@/pages/Login";
-
 export default {
   name: 'main-wrapper',
   components: {
@@ -35,6 +34,10 @@ export default {
   .main-wrapper {
     max-width: 900px;
     margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 40px;
   }
 
 </style>
