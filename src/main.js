@@ -5,7 +5,7 @@ import store from './vuex/store'
 import Vue from 'vue'
 // import Paginate from "vuejs-paginate-next"
 // import JwPagination from 'jw-vue-pagination';
-import "vue-awesome-paginate/dist/style.css";
+// import "vue-awesome-paginate/dist/style.css";
 const app = createApp(App)
 
 // app.component('Paginate', Paginate)
