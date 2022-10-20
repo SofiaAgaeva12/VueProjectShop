@@ -102,6 +102,11 @@ a {
 @import './src/assets/styles/variables.scss';
 
 .v-catalog-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
   flex-basis: 25%;
   width: 600px;
   box-shadow: 0 0 8px 0 #e0e0e0;

@@ -1,38 +1,25 @@
-
-import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from "vue-router";
 
 import vCatalog from '../components/v-catalog'
 import vCart from '../components/v-cart'
-// import vMainPage from '../components/v-main-page'
-// import vProductPage from '../components/v-product-page'
+import Register from "@/pages/Register";
 
-Vue.use(Router);
-
-let router = new Router({
+export const router = new VueRouter({
     routes: [
         {
             path: '/',
             name: 'mainPage',
-            component: vMainPage
-        },
-        {
-            path: '/catalog',
-            name: 'catalog',
             component: vCatalog
-        },
-        {
-            path: '/product',
-            name: 'product',
-            component: vProductPage
         },
         {
             path: '/cart',
             name: 'cart',
             component: vCart,
-            props: true
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: Register,
         }
     ]
 })
-
-export default router;
