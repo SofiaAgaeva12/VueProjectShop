@@ -1,19 +1,12 @@
 <template>
-    <mainWrapper/>
+  <MainWrapper></MainWrapper>
 </template>
 
-<script>
-import mainWrapper from "@/components/main-wrapper";
-
-export default {
-  name: 'App',
-  components: {
-    mainWrapper
-  }
-}
+<script setup>
+import MainWrapper from "@/components/main-wrapper";
 </script>
 
-<style>
+<style lang="scss">
 @import url('http://fonts.googleapis.com/css?family=Roboto');
 * {
   box-sizing: border-box;
@@ -21,7 +14,4 @@ export default {
   padding: 0;
   font-family: Roboto, sans-serif;
 }
-
-
-
 </style>
