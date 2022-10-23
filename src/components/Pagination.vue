@@ -5,6 +5,7 @@
           type="button"
           @click="onClickFirstPage"
           :disabled="isInFirstPage"
+          class="pagination-item_btn"
       >
         First
       </button>
@@ -15,6 +16,7 @@
           type="button"
           @click="onClickPreviousPage"
           :disabled="isInFirstPage"
+          class="pagination-item_btn"
       >
         Previous
       </button>
@@ -32,6 +34,7 @@
           @click="onClickPage(page.name)"
           :disabled="page.isDisabled"
           :class="{ active: isPageActive(page.name) }"
+          class="pagination-item_btn"
       >
         {{ page.name }}
       </button>
@@ -44,6 +47,7 @@
           type="button"
           @click="onClickNextPage"
           :disabled="isInLastPage"
+          class="pagination-item_btn"
       >
         Next
       </button>
@@ -54,6 +58,7 @@
           type="button"
           @click="onClickLastPage"
           :disabled="isInLastPage"
+          class="pagination-item_btn"
       >
         Last
       </button>
@@ -63,6 +68,7 @@
 
 <script>
 export default {
+  name: "PaginationPage",
   props: {
     maxVisibleButtons: {
       type: Number,
@@ -146,22 +152,38 @@ export default {
 <style>
 .pagination {
   list-style-type: none;
+  padding-bottom: 30px;
 }
 
 .pagination-item {
   display: inline-block;
-  padding: 5px 2px;
+  padding: 5px 5px;
 }
 
 button {
   background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+  box-shadow: 0 0 5px rgba(0, 0, 0, .3);
   border: none;
   border-radius: 3px;
 }
 
+.pagination-item_btn {
+  width: 60px;
+  height: 25px;
+}
 .active {
   background-color: #4AAE9B;
   color: #ffffff;
 }
+
+.active:hover {
+  background-color: #7ebbaf !important;
+}
+.pagination-item_btn:hover {
+  background-color: #e4f3f0;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+}
+
+
 </style>

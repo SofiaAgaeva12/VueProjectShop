@@ -1,46 +1,47 @@
 <template>
-  <div class="container" id="container">
+  <div class="container" id="container" :class="!isLogin ? 'rightPanelActive' : ''">
+
     <div class="form-container sign-up-container">
-      <form action="#">
-        <h2>Create Account</h2>
-        <div class="social-container">
-          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-        <span>or use your email for registration</span>
-        <input type="text" placeholder="Name" />
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <button>Sign Up</button>
-      </form>
+      <div class="form">
+        <h2 class="padding-20">Create Account</h2>
+        <input type="text" placeholder="ФИО" v-model="model.fio"/>
+        <input type="email" placeholder="Email" v-model="model.email"/>
+
+        <span class="error" v-for="error in errors" :key="error">{{ error.email }}</span>
+
+        <input type="password" placeholder="Пароль"  v-model="model.password"/>
+
+          <span v-for="error in errors" :key="error" class="error">{{ error.password }}</span>
+
+        <button v-on:click="signup" class="padding-20">Sign Up</button>
+      </div>
     </div>
     <div class="form-container sign-in-container">
-      <form action="#">
+      <div class="form">
+        <span class="error error-login" v-for="error in errors" :key="error">{{ error }}</span>
         <h2>Sign in</h2>
-        <div class="social-container">
-          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-        <span>or use your account</span>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <a href="#">Forgot your password?</a>
-        <button>Sign In</button>
-      </form>
+        <input type="email" placeholder="Email" v-model="model.email" class="padding-20"/>
+
+        <input type="password" placeholder="Password" v-model="model.password"/>
+
+        <button v-on:click="login" class="padding-20">Sign In</button>
+      </div>
     </div>
     <div class="overlay-container">
       <div class="overlay">
         <div class="overlay-panel overlay-left">
           <h2>Welcome Back!</h2>
           <p>To keep connected with us please login with your personal info</p>
-          <button class="ghost" id="signIn">Sign In</button>
+          <router-link to="/login">
+          <button class="ghost" id="signIn" @click="$emit('signIn')">Sign In</button>
+          </router-link>
         </div>
         <div class="overlay-panel overlay-right">
           <h2>Hello, Friend!</h2>
           <p>Enter your personal details and start journey with us</p>
-          <button class="ghost" id="signUp">Sign Up</button>
+          <router-link to="/register">
+          <button class="ghost" id="signUp" @click="$emit('signUp')">Sign Up</button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -51,29 +52,50 @@
 
 
 import axios from "axios";
+import router from "@/router";
 
 export default {
-  name: "LoginPage",
+  name: "RegisterLoginPage",
   data: () => {
     return {
       model: {
+        fio: '',
         email: '',
         password: '',
-      }
+      },
+      click: false,
+      errors: [],
+      per: [],
     }
   },
+  props: {
+    isLogin: Boolean,
+  },
   methods: {
-    async login() {
-      await axios.post('https://jurapro.bhuser.ru/api-shop/login', this.model ).then((res) => {
+    async signup() {
+
+      await axios.post('https://jurapro.bhuser.ru/api-shop/signup', this.model ).then((res) => {
         console.log(res.data)
+        router.push('/login')
       }).catch((err) => {
         console.log(err.response.data.error)
+        this.errors = err.response.data.error
       })
 
+    },
 
-    }
-  }
+    async login() {
+        await axios.post('https://jurapro.bhuser.ru/api-shop/login', {email: this.model.email, password: this.model.password }).then((res) => {
+          localStorage.setItem('token', res.data.data.user_token);
+          this.per = res.data;
+          router.push('/');
+        }).catch((err) => {
+          this.errors = err.response.data.error;
+        })
+      }
+    },
 }
+
 </script>
 
 <style scoped>
@@ -108,8 +130,8 @@ a {
 
 button {
   border-radius: 20px;
-  border: 1px solid #FF4B2B;
-  background-color: #FF4B2B;
+  border: 1px solid #56bd4b;
+  background-color: #56bd4b;
   color: #FFFFFF;
   font-size: 12px;
   font-weight: bold;
@@ -117,6 +139,7 @@ button {
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
+  cursor: pointer;
 }
 
 button:active {
@@ -132,7 +155,7 @@ button.ghost {
   border-color: #FFFFFF;
 }
 
-form {
+.form {
   background-color: #FFFFFF;
   display: flex;
   align-items: center;
@@ -170,13 +193,22 @@ input {
   transition: all 0.6s ease-in-out;
 }
 
+.error {
+  color: red;
+}
+
+.error-login {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
 .sign-in-container {
   left: 0;
   width: 50%;
   z-index: 2;
 }
 
-.container.right-panel-active .sign-in-container {
+.container.rightPanelActive .sign-in-container {
   transform: translateX(100%);
 }
 
@@ -187,7 +219,7 @@ input {
   z-index: 1;
 }
 
-.container.right-panel-active .sign-up-container {
+.container.rightPanelActive .sign-up-container {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
@@ -217,14 +249,14 @@ input {
   z-index: 100;
 }
 
-.container.right-panel-active .overlay-container{
+.container.rightPanelActive .overlay-container{
   transform: translateX(-100%);
 }
 
 .overlay {
   background: #FF416C;
-  background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-  background: linear-gradient(to right, #FF4B2B, #FF416C);
+  background: -webkit-linear-gradient(to right, #56bd4b, #19ae8d);
+  background: linear-gradient(to right, #30ad0b, #19ae8d);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -237,7 +269,7 @@ input {
   transition: transform 0.6s ease-in-out;
 }
 
-.container.right-panel-active .overlay {
+.container.rightPanelActive .overlay {
   transform: translateX(50%);
 }
 
@@ -260,7 +292,7 @@ input {
   transform: translateX(-20%);
 }
 
-.container.right-panel-active .overlay-left {
+.container.rightPanelActive .overlay-left {
   transform: translateX(0);
 }
 
@@ -269,11 +301,11 @@ input {
   transform: translateX(0);
 }
 
-.container.right-panel-active .overlay-right {
+.container.rightPanelActive .overlay-right {
   transform: translateX(20%);
 }
 
-.social-container {
+.padding-20 {
   margin: 20px 0;
 }
 

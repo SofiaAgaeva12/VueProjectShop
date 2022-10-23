@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import vCatalog from "@/components/v-catalog";
-import vCart from "@/components/v-cart";
-import Register from "@/pages/Register";
+import vCatalog from "@/components/Catalog";
+import vCart from "@/components/Cart";
+import Register from "@/pages/Auth";
 
 const routes = [
     {
@@ -17,6 +17,11 @@ const routes = [
     {
         path: '/register',
         name: 'register',
+        component: Register,
+    },
+    {
+        path: '/login',
+        name: 'login',
         component: Register,
     }
 ]
